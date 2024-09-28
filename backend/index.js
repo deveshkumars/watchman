@@ -4,7 +4,7 @@ import bodyParser from "body-parser"
 import dotenv from "dotenv"
 dotenv.config()
 
-import { db } from "./util/FirebaseInit.js";
+import {db} from "./util/FirebaseInit.js";
 import { collection, getDocs, addDoc } from "firebase/firestore"
 
 const app = express()
@@ -23,10 +23,10 @@ app.get("/", async (req, res) => {
 	res.send("Hello World!");
 });
 
-// Get all students
-app.get("/students", async (req, res) => {
-	console.log("getting all students")
-	const collectionRef = collection(db, "Students");
+// Get all watches
+app.get("/watches", async (req, res) => {
+	console.log("getting all watches")
+	const collectionRef = collection(db, "Watches");
 	const collectionSnap = await getDocs(collectionRef)
 	const docs = []
 	collectionSnap.forEach((doc) => {
@@ -35,17 +35,17 @@ app.get("/students", async (req, res) => {
 	res.send(docs)
 })
 
-// Add a new student
-app.post("/students", async (req, res) => {
-	const studentRef = collection(db, "Students");
-	const studentBody = req.body
+// Add a new watch
+app.post("/watches", async (req, res) => {
+	const watchRef = collection(db, "Watches");
+	const watchBody = req.body
 	try {
-		await addDoc(studentRef, studentBody)
+		await addDoc(watchRef, watchBody)
 	} catch (e) {
 		console.error(e)
 		res.status(500);
 	}
-	res.status(200).send("Succesfully Created Student")
+	res.status(200).send("Succesfully Created Watch")
 })
 
 function start() {
